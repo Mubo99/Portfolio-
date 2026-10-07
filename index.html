@@ -270,6 +270,16 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
    {title:"Brand Identity",cat:"design",pdf:"designs/brand-identity.pdf"},
    {title:"Guitar Cover",cat:"music",url:"https://youtu.be/XXXX",wide:true},          */
 const projects=[
+  {title:"Urin — Paper vs Hand Dryer",cat:"reel",url:"https://www.facebook.com/reel/1071733032262203",img:"reels/reel-01.jpg",tall:true},
+  {title:"Urin — Does Toilet Paper Dissolve?",cat:"reel",url:"https://www.facebook.com/reel/2141344886435304",img:"reels/reel-02.jpg",tall:true},
+  {title:"Urin — 100% Natural",cat:"reel",url:"https://www.facebook.com/reel/1450502933222055",img:"reels/reel-03.jpg",tall:true},
+  {title:"Beauty Clinic — Reel 01",cat:"reel",url:"https://www.facebook.com/reel/2773067139718184",img:"reels/reel-04.jpg",tall:true},
+  {title:"Reel 05",cat:"reel",url:"https://www.facebook.com/reel/4213776322101797",tall:true},
+  {title:"Promo — Student Holiday",cat:"reel",url:"https://www.facebook.com/reel/839781065353974",img:"reels/reel-06.jpg",tall:true},
+  {title:"Beauty Clinic — Reel 02",cat:"reel",url:"https://www.facebook.com/reel/1504790920717154",img:"reels/reel-07.jpg",tall:true},
+  {title:"Beauty Clinic — 50% Off",cat:"reel",url:"https://www.facebook.com/reel/797004916418726",img:"reels/reel-08.jpg",tall:true},
+  {title:"Promo — Student Holiday 50% Off",cat:"reel",url:"https://www.facebook.com/reel/851767340996435",img:"reels/reel-09.jpg",tall:true},
+  {title:"Beauty Clinic — Reel 03",cat:"reel",url:"https://www.facebook.com/reel/1837477460474475",img:"reels/reel-10.jpg",tall:true},
   {title:"Yearbook — Acting Class 4A",cat:"yearbook",pdf:"yearbook/yearbook-full.pdf"},
   {title:"Urin — Back to Kinder",cat:"poster",img:"posters/poster-01.webp"},
   {title:"Absolut — Protect Your Teeth",cat:"poster",img:"posters/poster-02.webp"},
@@ -311,7 +321,8 @@ function parseVideo(u){
   if(m=u.match(/youtube\.com\/shorts\/([\w-]{6,})/))return{src:`https://www.youtube.com/embed/${m[1]}?autoplay=1&playsinline=1`,thumb:`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`,vertical:true};
   if(m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/))([\w-]{6,})/))return{src:`https://www.youtube.com/embed/${m[1]}?autoplay=1&playsinline=1`,thumb:`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`};
   if(m=u.match(/instagram\.com\/(reels?|p|tv)\/([\w-]+)/))return{src:`https://www.instagram.com/${m[1]==='reels'?'reel':m[1]}/${m[2]}/embed`,vertical:true};
-  if(m=u.match(/tiktok\.com\/.*video\/(\d+)/))return{src:`https://www.tiktok.com/embed/v2/${m[1]}`,vertical:true};
+  if(m=u.match(/facebook\.com\/(?:reel|watch|[\w.]+\/videos)\/?(?:[\w.]+\/)?(\d+)/))return{src:'https://www.facebook.com/plugins/video.php?show_text=false&autoplay=true&href='+encodeURIComponent('https://www.facebook.com/reel/'+m[1]),vertical:true};
+  if(m=u.match(/tiktok.com\.com\/.*video\/(\d+)/))return{src:`https://www.tiktok.com/embed/v2/${m[1]}`,vertical:true};
   if(m=u.match(/vimeo\.com\/(?:.*\/)?(\d+)/))return{src:`https://player.vimeo.com/video/${m[1]}?autoplay=1`};
   return{src:null};
 }
