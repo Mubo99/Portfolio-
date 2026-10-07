@@ -275,7 +275,6 @@ html.smooth{scroll-behavior:auto!important}
 @media (pointer:fine){html.cc,html.cc *{cursor:none!important}}
 @media (pointer:coarse){#cur-dot,#cur-ring{display:none}}
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
 <div id="cur-dot"></div><div id="cur-ring"><b><i></i></b></div>
@@ -290,70 +289,6 @@ html.smooth{scroll-behavior:auto!important}
 
 <main id="top">
 <section class="hero" id="hero">
-  <!-- DARK mode: camera, studio light and video-editing tools -->
-  <div id="orbit" aria-hidden="true"><div class="gt" style="--b:#001e36;--f:#31a8ff"><span class="gl">Ps</span></div><div class="gt" style="--b:#330000;--f:#ff9a00"><span class="gl">Ai</span></div><div class="gt" style="--b:#001e36;--f:#31a8ff"><span class="gl">Lr</span></div><div class="gt" style="--b:#00005b;--f:#c9a8ff"><span class="gl">Pr</span></div><div class="gt" style="--b:#00005b;--f:#9999ff"><span class="gl">Ae</span></div><div class="gt" style="--b:#16161a;--f:#ffffff"><span class="gl"><svg viewBox="0 0 64 64" width="100%" height="100%"><defs>
-<radialGradient id="oR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb0b0"/><stop offset=".5" stop-color="#ff4040"/><stop offset="1" stop-color="#a50e0e"/></radialGradient>
-<radialGradient id="oG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b6ffd0"/><stop offset=".5" stop-color="#2fd37a"/><stop offset="1" stop-color="#0b7a3c"/></radialGradient>
-<radialGradient id="oB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b8d4ff"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1239a8"/></radialGradient></defs>
-<circle cx="32" cy="21" r="12" fill="url(#oR)"/><circle cx="22" cy="39" r="12" fill="url(#oG)"/><circle cx="42" cy="39" r="12" fill="url(#oB)"/></svg></span></div></div>
-  <div class="deco deco-dark" aria-hidden="true">
-    <div class="cone"></div>
-    <div class="ico ico3d" style="--x:5%;--y:12%;--s:150px;--r:-7deg;--d:20"><svg viewBox="0 0 220 170"><defs>
-<linearGradient id="cBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#58585f"/><stop offset=".07" stop-color="#2e2e33"/><stop offset=".6" stop-color="#17171a"/><stop offset="1" stop-color="#0a0a0c"/></linearGradient>
-<linearGradient id="cTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a6a72"/><stop offset="1" stop-color="#1c1c20"/></linearGradient>
-<linearGradient id="cMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b4b4bc"/><stop offset=".45" stop-color="#4a4a52"/><stop offset=".7" stop-color="#8e8e96"/><stop offset="1" stop-color="#2c2c32"/></linearGradient>
-<radialGradient id="cGlass" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="#7db2ff"/><stop offset=".3" stop-color="#21447c"/><stop offset=".65" stop-color="#0a1428"/><stop offset="1" stop-color="#010308"/></radialGradient>
-<pattern id="cDots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".9" fill="#2c2c32"/></pattern>
-</defs>
-<path d="M68 30Q70 8 92 8H128Q150 8 152 30Z" fill="url(#cTop)"/><rect x="100" y="2" width="20" height="8" rx="2" fill="#2a2a30"/>
-<rect x="6" y="26" width="208" height="128" rx="17" fill="url(#cBody)"/>
-<rect x="6.5" y="26.5" width="207" height="127" rx="16.5" fill="none" stroke="rgba(255,255,255,.22)"/>
-<rect x="12" y="40" width="38" height="104" rx="13" fill="#0e0e11"/><rect x="12" y="40" width="38" height="104" rx="13" fill="url(#cDots)"/>
-<rect x="170" y="40" width="38" height="104" rx="13" fill="#0e0e11"/><rect x="170" y="40" width="38" height="104" rx="13" fill="url(#cDots)"/>
-<rect x="20" y="12" width="42" height="18" rx="5" fill="url(#cMetal)"/><path d="M26 14v6M32 14v6M38 14v6M44 14v6M50 14v6M56 14v6" stroke="#1a1a1e" stroke-width="1.4"/>
-<ellipse cx="176" cy="22" rx="15" ry="6.5" fill="url(#cMetal)"/><ellipse cx="176" cy="20" rx="9" ry="3" fill="#d0d0d8" opacity=".55"/>
-<circle cx="194" cy="46" r="3.6" fill="#e0242b"/><circle cx="193" cy="45" r="1.2" fill="#ff9a9a"/>
-<circle cx="110" cy="92" r="55" fill="url(#cMetal)"/><circle cx="110" cy="92" r="50" fill="#0e0e11"/>
-<circle cx="110" cy="92" r="43" fill="none" stroke="#2a2a30" stroke-width="9"/><circle cx="110" cy="92" r="43" fill="none" stroke="#5a5a62" stroke-width="9" stroke-dasharray="2 3.2"/>
-<circle cx="110" cy="92" r="35" fill="none" stroke="#c8222a" stroke-width="2.6"/>
-<circle cx="110" cy="92" r="31" fill="url(#cGlass)"/><circle cx="110" cy="92" r="19" fill="#03050c" stroke="#1d2f52" stroke-width="1.5"/>
-<ellipse cx="98" cy="77" rx="12" ry="6" transform="rotate(-38 98 77)" fill="#fff" opacity=".6"/>
-<circle cx="124" cy="106" r="5.5" fill="#8c6bff" opacity=".55"/><circle cx="117" cy="111" r="3" fill="#2de0b0" opacity=".5"/>
-<path d="M12 33Q12 27 20 27H200Q208 27 208 33" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"/>
-</svg></div>
-    <div class="ico ico3d" style="--x:83%;--y:6%;--s:105px;--r:5deg;--d:24;--t:-2s"><svg viewBox="0 0 150 200"><defs>
-<radialGradient id="lFace" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e9eefc"/><stop offset="1" stop-color="#9aa6c0"/></radialGradient>
-<radialGradient id="lGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-<linearGradient id="lMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a8a92"/><stop offset=".5" stop-color="#2a2a30"/><stop offset="1" stop-color="#7a7a82"/></linearGradient>
-</defs>
-<ellipse cx="72" cy="48" rx="86" ry="62" fill="url(#lGlow)" opacity=".5"/>
-<path d="M72 126V186M72 156L34 194M72 156L110 194" stroke="url(#lMetal)" stroke-width="6" stroke-linecap="round" fill="none"/>
-<rect x="63" y="114" width="18" height="16" rx="4" fill="url(#lMetal)"/>
-<path d="M24 14L126 14L138 92L12 92Z" fill="#101013"/>
-<path d="M16 8L134 8L146 84L4 84Z" fill="#17171b"/>
-<path d="M22 14L128 14L138 78L12 78Z" fill="url(#lFace)"/>
-<path d="M47 14L41 78M75 14V78M103 14L109 78M20 36H130M16 57H134" stroke="rgba(30,40,70,.12)" stroke-width="1"/>
-<path d="M22 14L128 14" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
-<ellipse cx="75" cy="44" rx="40" ry="20" fill="url(#lGlow)"/>
-</svg></div>
-    <div class="ico ico3d hide-sm" style="--x:84%;--y:80%;--s:84px;--r:-6deg;--d:16;--t:-5s"><svg viewBox="0 0 130 120"><defs>
-<linearGradient id="kBoard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a40"/><stop offset="1" stop-color="#0f0f12"/></linearGradient>
-<pattern id="kStripes" width="22" height="24" patternUnits="userSpaceOnUse" patternTransform="skewX(-32)"><rect width="11" height="24" fill="#f4f4f6"/><rect x="11" width="11" height="24" fill="#16161a"/></pattern>
-</defs>
-<rect x="8" y="46" width="112" height="68" rx="6" fill="url(#kBoard)" stroke="rgba(255,255,255,.25)"/>
-<rect x="8" y="46" width="112" height="16" fill="url(#kStripes)"/>
-<path d="M18 76H110M18 90H110M18 104H80" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
-<g transform="rotate(-16 10 46)"><rect x="8" y="22" width="112" height="22" rx="4" fill="url(#kStripes)" stroke="rgba(255,255,255,.3)"/></g>
-<circle cx="12" cy="46" r="4" fill="#9a9aa2"/>
-</svg></div>
-  </div>
-  <!-- LIGHT mode: design software, rulers and measurements -->
-  <div class="deco deco-light" aria-hidden="true">
-    <div class="ruler-x" id="rulerX"></div><div class="ruler-y"></div>
-    <div class="guide" style="left:22%;top:106px;bottom:0;width:1px"></div><div class="guide" style="top:62%;left:22px;right:0;height:1px"></div>
-    <div class="ico line hide-sm" style="--x:73%;--y:58%;--s:230px;--r:-4deg;--d:14;--t:-1s"><svg viewBox="0 0 200 130" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="196" height="126" rx="9" fill="var(--surface)"/><path d="M2 22h196"/><circle cx="14" cy="12" r="3" fill="currentColor"/><circle cx="25" cy="12" r="3" fill="currentColor"/><circle cx="36" cy="12" r="3" fill="currentColor"/><path d="M12 34h14M12 46h14M12 58h14M12 70h14"/><path d="M40 34v86M40 34h110v86H40z"/><path d="M52 100C70 40 100 110 138 52" stroke="#18a0fb" stroke-width="2.5"/><rect x="49" y="97" width="6" height="6" fill="#fff" stroke="#18a0fb"/><rect x="135" y="49" width="6" height="6" fill="#fff" stroke="#18a0fb"/><path d="M160 34h30M160 46h30M160 58h22M160 70h30M160 82h26"/></svg></div>
-    <div class="ico line" style="--x:80%;--y:84%;--s:150px;--r:0deg;--d:12;--t:-4s"><svg viewBox="0 0 150 30" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8v14M148 8v14M2 15h146"/><path d="M2 15l8-4v8zM148 15l-8-4v8z" fill="currentColor"/><text x="75" y="11" font-size="11" text-anchor="middle" fill="currentColor" stroke="none" font-family="Inter,sans-serif" paint-order="stroke">250 mm</text></svg></div>
-  </div>
   <h1>Мөнхболд</h1>
 
   <!-- PUT YOUR CUT-OUT PHOTO HERE: images/portrait.png (transparent background, waist-up, facing camera) -->
@@ -736,37 +671,6 @@ addEventListener('keydown',e=>{
   }
 });
 
-/* ruler numbers for the light-mode hero */
-(function(){const r=$('rulerX');if(!r)return;for(let i=0;i*100<screen.width+400;i++){const s=document.createElement('span');s.style.left=(i*100+22)+'px';s.textContent=i*10;r.appendChild(s)}})();
-
-/* ---------- orbit: glass tiles circle around the portrait ---------- */
-(function(){
-  const hero=$('hero'),box=$('orbit');if(!hero||!box)return;
-  const items=[...box.children],n=items.length;if(!n)return;
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t=0,spd=2.6,last=performance.now(),vis=true;
-  new MutationObserver(()=>{spd=3.2}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(hero);
-  function place(){
-    const W=hero.clientWidth,H=hero.clientHeight,small=W<700;
-    const mx=parseFloat(hero.style.getPropertyValue('--mx'))||0,my=parseFloat(hero.style.getPropertyValue('--my'))||0;
-    const size=small?58:Math.min(124,Math.max(84,W*.082));
-    const R=Math.min(W*(small?.38:.35),620),ry=R*.17;
-    const cx=W/2+mx*16,cy=H*(small?.62:.64)+my*8;
-    items.forEach((el,i)=>{
-      const a=t+i*2*Math.PI/n,s=Math.sin(a),c=Math.cos(a),k=(c+1)/2;
-      const sc=.66+.34*k,x=cx+R*s,y=cy+ry*c;
-      el.style.setProperty('--gs',size+'px');
-      el.style.transform='translate('+(x-size/2).toFixed(1)+'px,'+(y-size/2).toFixed(1)+'px) perspective(700px) rotateY('+(-s*38).toFixed(1)+'deg) rotateX('+(my*-10).toFixed(1)+'deg) scale('+sc.toFixed(3)+')';
-      el.style.zIndex=c>0?5:1;
-      el.style.opacity=(.5+.5*k).toFixed(2);
-    });
-  }
-  function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(vis&&!reduce){t+=dt*spd;spd*=Math.pow(.985,dt*60)}if(vis&&!hero.classList.contains('gl3d'))place();requestAnimationFrame(frame)}
-  place();requestAnimationFrame(frame);
-  addEventListener('resize',place);
-})();
-
 /* ---------- hero: photo follows the cursor ---------- */
 (function(){
   const hero=$('hero');
@@ -931,6 +835,5 @@ document.querySelectorAll('.skill,#skills h2,#skills .lead,.eyebrow,#work h2,#wo
 })})();
 $('yr').textContent=new Date().getFullYear();
 </script>
-<script type="module" src="orbit3d.js"></script>
 </body>
 </html>
