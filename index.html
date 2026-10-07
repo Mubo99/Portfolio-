@@ -57,9 +57,14 @@ h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 34px}
 .filters button{background:none;border:1px solid var(--line);color:var(--muted);padding:8px 20px;border-radius:99px;cursor:pointer;font:inherit;font-size:.88rem;transition:.2s}
 .filters button.on,.filters button:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+[hidden]{display:none!important}
+.grid{columns:3 300px;column-gap:16px}
+.grid .card{margin-bottom:16px;break-inside:avoid;display:block}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.card.cat .meta h3{font-size:2.1rem}
+.card.cat .meta{padding:22px}
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface);cursor:pointer}
-.card.tall{aspect-ratio:3/4}.card.sq{aspect-ratio:1/1}.card.hide{display:none}
+.card.tall{aspect-ratio:3/4}.card.sq{aspect-ratio:1/1}.card.hide{display:none!important}
 .card .art{position:absolute;inset:0;filter:grayscale(1);transition:filter .5s,transform .7s}
 .card:hover .art{filter:grayscale(0);transform:scale(1.06)}
 .card .meta{position:absolute;inset:auto 0 0 0;padding:18px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff}
@@ -169,10 +174,9 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
   <div class="wrap">
     <span class="eyebrow">Selected work</span>
     <h2>Four crafts.<br>One eye.</h2>
-    <div class="filters" id="filters">
-      <button class="on" data-f="all">All</button><button data-f="reel">Reels</button><button data-f="poster">Posters</button><button data-f="design">Designs</button><button data-f="yearbook">Yearbooks</button><button data-f="photo">Photography</button><button data-f="music">Music</button>
-    </div>
-    <div class="grid" id="grid"></div>
+    <div class="filters" id="filters"></div>
+    <div class="cats" id="cats"></div>
+    <div class="grid" id="grid" hidden></div>
   </div>
 </section>
 
@@ -258,11 +262,12 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
    pdf   : path to a PDF (designs / yearbooks) — opens a page viewer you can swipe
    wide  : true for a horizontal (16:9) video; reels default to vertical (9:16)
    tall  : true makes the tile taller in the grid                                    */
+/* Categories with no items are hidden automatically. To add one, paste a line like:
+   {title:"My Reel",cat:"reel",url:"https://www.youtube.com/shorts/XXXX"},
+   {title:"Brand Identity",cat:"design",pdf:"designs/brand-identity.pdf"},
+   {title:"Guitar Cover",cat:"music",url:"https://youtu.be/XXXX",wide:true},          */
 const projects=[
   {title:"Yearbook — Acting Class 4A",cat:"yearbook",pdf:"yearbook/yearbook-full.pdf"},
-  {title:"Brand Identity — Studio Nova",cat:"design",pdf:"designs/brand-identity.pdf"},
-  {title:"Reel 01",cat:"reel",url:"",tall:true},
-  {title:"Reel 02",cat:"reel",url:"",tall:true},
   {title:"Urin — Back to Kinder",cat:"poster",img:"posters/poster-01.webp"},
   {title:"Absolut — Protect Your Teeth",cat:"poster",img:"posters/poster-02.webp"},
   {title:"Batmon — Naadam Greeting",cat:"poster",img:"posters/poster-03.webp"},
@@ -273,8 +278,6 @@ const projects=[
   {title:"Urin — Picnic",cat:"poster",img:"posters/poster-08.webp"},
   {title:"Urin Soft",cat:"poster",img:"posters/poster-09.webp"},
   {title:"Urin — Rain or Shine",cat:"poster",img:"posters/poster-10.webp"},
-  {title:"Guitar Cover",cat:"music",url:"",wide:true},
-  {title:"Singing",cat:"music",url:"",wide:true},
   {title:"Orange Studio — Group",cat:"photo",img:"photos/photo-01.jpg",tall:true},
   {title:"Black & White — Class",cat:"photo",img:"photos/photo-02.jpg"},
   {title:"In Black — Trio",cat:"photo",img:"photos/photo-03.jpg",tall:true},
@@ -292,6 +295,7 @@ const projects=[
   {title:"Graduation Portrait — 05",cat:"photo",img:"photos/photo-15.jpg",tall:true}
 ];
 const labels={reel:"Reel",poster:"Poster",design:"Design",yearbook:"Yearbook",photo:"Photography",music:"Music"};
+const cats=[{id:"reel",name:"Reels"},{id:"poster",name:"Posters"},{id:"design",name:"Designs"},{id:"yearbook",name:"Yearbooks"},{id:"photo",name:"Photography"},{id:"music",name:"Music"}];
 
 /* ---------- helpers ---------- */
 const $=id=>document.getElementById(id);
@@ -316,31 +320,53 @@ if(hasPdfJs)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com
 let doc=null,cur=1,total=0,token=0,spread=false;
 const pdfEl=$('pdf'),stage=$('stage'),pagesEl=$('pages'),pmsg=$('pmsg');
 
-/* ---------- grid ---------- */
-const grid=$('grid');
+/* ---------- categories + grid ---------- */
+const grid=$('grid'),catsEl=$('cats'),filtersEl=$('filters');
+const used=cats.filter(c=>projects.some(p=>p.cat===c.id));
+const coverEls={};
+function setCover(cat,css){const a=coverEls[cat];if(a&&!a.dataset.set){a.style.background=css;a.dataset.set='1'}}
+
+filtersEl.innerHTML='<button class="on" data-f="all">All</button>'+used.map(c=>'<button data-f="'+c.id+'">'+c.name+'</button>').join('');
+used.forEach((c,i)=>{
+  const n=projects.filter(p=>p.cat===c.id).length;
+  const el=document.createElement('div');
+  el.className='card cat reveal';el.tabIndex=0;
+  el.innerHTML='<div class="art" style="background:'+grad(i)+'"></div><div class="meta"><small>'+n+(n>1?' items':' item')+'</small><h3>'+c.name+'</h3></div>';
+  el.onclick=()=>show(c.id);
+  el.onkeydown=e=>{if(e.key==='Enter')show(c.id)};
+  coverEls[c.id]=el.querySelector('.art');
+  catsEl.appendChild(el);
+});
+
 projects.forEach((p,i)=>{
   p._v=parseVideo(p.url);
   const vertical=p._v?(p.wide?false:(p._v.vertical||p.cat==='reel')):false;
   p._vertical=vertical;
   const thumb=p.img||(p._v&&p._v.thumb)||'';
   const el=document.createElement('div');
-  el.className='card reveal'+((p.tall||vertical)?' tall':'')+(p.cat==='poster'?' sq':'')+((p.url)?' play':'');
+  el.className='card reveal hide'+((p.tall||vertical)?' tall':'')+(p.cat==='poster'?' sq':'')+((p.url)?' play':'');
   el.dataset.cat=p.cat;
   el.tabIndex=0;
-  el.innerHTML=`<div class="art" style="${thumb?`background:url('${esc(thumb)}') center/cover`:`background:${grad(i)}`}"></div><div class="meta"><small>${labels[p.cat]}${p.pdf?' · PDF':''}</small><h3>${esc(p.title)}</h3></div>`;
+  el.innerHTML='<div class="art" style="'+(thumb?"background:url('"+esc(thumb)+"') center/cover":'background:'+grad(i))+'"></div><div class="meta"><small>'+labels[p.cat]+(p.pdf?' · PDF':'')+'</small><h3>'+esc(p.title)+'</h3></div>';
   const open=()=>p.pdf?openPdf(p):openLb(p,i);
   el.onclick=open;
   el.onkeydown=e=>{if(e.key==='Enter')open()};
   p._el=el;
   grid.appendChild(el);
+  if(thumb)setCover(p.cat,"url('"+thumb+"') center/cover");
   /* auto cover from first PDF page */
   if(p.pdf&&!p.img)pdfCover(p);
 });
-$('filters').onclick=e=>{
-  const b=e.target.closest('button');if(!b)return;
-  document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));
-  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.cat!==b.dataset.f));
-};
+
+function show(id){
+  filtersEl.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.f===id));
+  const home=id==='all';
+  catsEl.hidden=!home;grid.hidden=home;
+  projects.forEach(p=>{const on=p.cat===id;p._el.classList.toggle('hide',!on);if(on)p._el.classList.add('in')});
+  catsEl.querySelectorAll('.card').forEach(c=>c.classList.add('in'));
+  if(!home)$('work').scrollIntoView({behavior:'smooth'});
+}
+filtersEl.onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.f)};
 
 /* ---------- lightbox (images + videos) ---------- */
 const lb=$('lb'),lbart=$('lbart');
@@ -374,7 +400,7 @@ function pdfCover(p){
     const vp=pg.getViewport({scale:1});const s=600/vp.width;const v=pg.getViewport({scale:s});
     const c=document.createElement('canvas');c.width=v.width;c.height=v.height;
     return pg.render({canvasContext:c.getContext('2d'),viewport:v}).promise.then(()=>{
-      p._el.querySelector('.art').style.background=`url('${c.toDataURL('image/jpeg',.82)}') center top/cover`;
+      const css=`url('${c.toDataURL('image/jpeg',.82)}') center top/cover`;p._el.querySelector('.art').style.background=css;setCover(p.cat,css);
     });
   }).catch(()=>{});
 }
