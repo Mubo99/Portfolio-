@@ -4,7 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Мөнхболд — Designer, Editor, Photographer & Videographer</title>
-<meta name="description" content="Portfolio of Мөнхболд, Ulaanbaatar: design, editing, photography and videography.">
+<meta name="description" content="Мөнхболд — designer, video editor, photographer and videographer from Ulaanbaatar. Reels, posters, packaging design, photography and music.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Мөнхболд — Designer, Editor, Photographer & Videographer">
+<meta property="og:description" content="Reels, posters, packaging design, photography and music by Мөнхболд, Ulaanbaatar.">
+<meta property="og:image" content="https://portfolio-mu-roan-58.vercel.app/images/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://portfolio-mu-roan-58.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://portfolio-mu-roan-58.vercel.app/images/share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -69,8 +78,8 @@ nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84
 @media(max-width:700px){.ico{--s:44px!important}.hide-sm{display:none}.ruler-y{display:none}}
 @media(prefers-reduced-motion:reduce){.ico{animation:none}}
 .hero::after{content:"";position:absolute;z-index:3;inset:auto 0 0 0;height:22%;background:linear-gradient(transparent,var(--bg));pointer-events:none}
-header{color:#fff;mix-blend-mode:difference}
-.switch{background:#fff}.switch::after{background:#000}
+header{color:var(--text);transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+header.solid{background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
 .sil{position:absolute;z-index:2;left:50%;bottom:0;transform:translateX(-50%);height:82%;aspect-ratio:3/4;display:none}
 .sil svg{width:100%;height:100%}
 .hero.nophoto .sil{display:block}.hero.nophoto .portrait{display:none}
@@ -663,6 +672,9 @@ $('lang').onclick=()=>setLang(LANG==='en'?'mn':'en');
   try{l=localStorage.getItem('lang')||((navigator.language||'').toLowerCase().startsWith('mn')?'mn':'en')}catch(e){}
   setLang(l);
 })();
+
+/* ---------- header gets a soft bar after scrolling ---------- */
+(function(){const hd=document.querySelector('header');const f=()=>hd.classList.toggle('solid',scrollY>40);addEventListener('scroll',f,{passive:true});f()})();
 
 /* ---------- theme ---------- */
 const root=document.documentElement;
