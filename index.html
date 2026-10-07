@@ -195,25 +195,10 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
   .rt{grid-column:2;grid-row:1;gap:12px}
   .hero{padding-top:0}
 }
-/* mouse spotlight + titles that light up under the cursor */
-#spot{position:fixed;inset:0;z-index:20;pointer-events:none;opacity:0;transition:opacity .4s;
-  background:radial-gradient(circle 360px at var(--sx,50%) var(--sy,50%),rgba(255,255,255,.10),rgba(255,255,255,.03) 45%,rgba(0,0,0,.22) 100%)}
-:root[data-theme="light"] #spot{background:radial-gradient(circle 360px at var(--sx,50%) var(--sy,50%),rgba(255,255,255,.55),rgba(255,255,255,0) 45%,rgba(0,0,0,.07) 100%)}
-#spot.on{opacity:1}
-@media(pointer:coarse){#spot{display:none}}
-.glow{--gx:-9999px;--gy:-9999px;color:transparent;-webkit-background-clip:text;background-clip:text;
-  background-image:radial-gradient(circle 170px at var(--gx) var(--gy),var(--text) 0,color-mix(in srgb,var(--text) 45%,transparent) 100%);
-  background-color:color-mix(in srgb,var(--text) var(--base,42%),var(--bg))}
-.hero h1.glow{--base:80%}
-.glow.lit{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--text) 45%,transparent))}
-@media(pointer:coarse){.glow{color:var(--text);background:none}}
-.card h3{transition:text-shadow .3s}
-.card:hover h3{text-shadow:0 0 18px rgba(255,255,255,.85),0 0 4px rgba(255,255,255,.6)}
 </style>
 </head>
 <body>
 
-<div id="spot" aria-hidden="true"></div>
 <header>
   <nav>
     <a href="#top" class="logo">Мөнхболд</a>
@@ -686,30 +671,6 @@ $('lang').onclick=()=>setLang(LANG==='en'?'mn':'en');
   let l='en';
   try{l=localStorage.getItem('lang')||((navigator.language||'').toLowerCase().startsWith('mn')?'mn':'en')}catch(e){}
   setLang(l);
-})();
-
-/* ---------- mouse spotlight + glowing titles ---------- */
-(function(){
-  if(matchMedia('(pointer: coarse)').matches)return;
-  const spot=$('spot');const els=[...document.querySelectorAll('.hero h1, h2, .svc h3, .cv h4')];
-  els.forEach(e=>e.classList.add('glow'));
-  let mx=innerWidth/2,my=innerHeight/2,sx=mx,sy=my,raf=0;
-  const R=220;
-  function paint(){
-    sx+=(mx-sx)*.18;sy+=(my-sy)*.18;
-    spot.style.setProperty('--sx',sx.toFixed(1)+'px');spot.style.setProperty('--sy',sy.toFixed(1)+'px');
-    for(const e of els){
-      if(!e.offsetParent&&e.tagName!=='H1')continue;
-      const r=e.getBoundingClientRect();
-      const near=mx>r.left-R&&mx<r.right+R&&my>r.top-R&&my<r.bottom+R;
-      if(near){e.style.setProperty('--gx',(mx-r.left).toFixed(0)+'px');e.style.setProperty('--gy',(my-r.top).toFixed(0)+'px');e.classList.add('lit')}
-      else if(e.classList.contains('lit')){e.style.setProperty('--gx','-9999px');e.style.setProperty('--gy','-9999px');e.classList.remove('lit')}
-    }
-    raf=(Math.abs(mx-sx)>.5||Math.abs(my-sy)>.5)?requestAnimationFrame(paint):0;
-  }
-  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;spot.classList.add('on');if(!raf)raf=requestAnimationFrame(paint)},{passive:true});
-  addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(paint)},{passive:true});
-  document.documentElement.addEventListener('mouseleave',()=>spot.classList.remove('on'));
 })();
 
 /* ---------- header gets a soft bar after scrolling ---------- */
