@@ -85,11 +85,22 @@ nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84
 :root[data-theme="light"] .deco-light .ico{scale:1;rotate:var(--r,0deg);filter:none;opacity:1}
 :root[data-theme="light"] .deco-dark .ico{scale:.25;rotate:calc(var(--r,0deg) - 140deg);filter:blur(8px);opacity:0}
 .ico{position:absolute;left:var(--x);top:var(--y);width:var(--s,64px);rotate:var(--r,0deg);
-  translate:calc(var(--mx,0)*var(--d,20)*1px) calc(var(--my,0)*var(--d,20)*.6px);animation:bob 7s ease-in-out infinite;animation-delay:var(--t,0s)}
-.ico svg{display:block;width:100%;height:auto;overflow:visible}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.tile{aspect-ratio:1;border-radius:22%;background:var(--bg);color:var(--fg);display:grid;place-items:center;font:700 calc(var(--s,64px)*.42)/1 Inter,system-ui,sans-serif;letter-spacing:-.04em;box-shadow:0 14px 30px -10px rgba(0,0,0,.45),inset 0 0 0 2px color-mix(in srgb,var(--fg) 55%,transparent)}
+  translate:calc(var(--mx,0)*var(--d,20)*1px) calc(var(--my,0)*var(--d,20)*.6px + var(--bob,0px));
+  transform:perspective(620px) rotateX(calc(var(--my,0)*-16deg)) rotateY(calc(var(--mx,0)*18deg));transform-style:preserve-3d;
+  animation:bob 7s ease-in-out infinite;animation-delay:var(--t,0s)}
+@property --bob{syntax:'<length>';inherits:true;initial-value:0px}
+.ico svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 22px 18px rgba(0,0,0,.55)) drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+@keyframes bob{0%,100%{--bob:0px}50%{--bob:-14px}}
+.tile{position:relative;aspect-ratio:1;border-radius:24%;color:var(--fg);display:grid;place-items:center;font:800 calc(var(--s,64px)*.42)/1 Inter,system-ui,sans-serif;letter-spacing:-.04em;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--bg) 62%,#fff) 0%,var(--bg) 42%,color-mix(in srgb,var(--bg) 65%,#000) 100%);
+  text-shadow:0 2px 3px rgba(0,0,0,.55),0 0 14px color-mix(in srgb,var(--fg) 55%,transparent);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.4),inset 0 -4px 8px rgba(0,0,0,.5),inset 0 0 0 1.5px color-mix(in srgb,var(--fg) 50%,transparent),
+    0 1px 0 color-mix(in srgb,var(--bg) 55%,#000),0 2px 0 color-mix(in srgb,var(--bg) 50%,#000),0 3px 0 color-mix(in srgb,var(--bg) 45%,#000),0 4px 0 color-mix(in srgb,var(--bg) 40%,#000),0 5px 0 color-mix(in srgb,var(--bg) 35%,#000),0 6px 0 color-mix(in srgb,var(--bg) 30%,#000),
+    0 26px 28px -6px rgba(0,0,0,.65)}
+.tile::before{content:"";position:absolute;inset:3.5% 3.5% 48% 3.5%;border-radius:22% 22% 70% 70%/24% 24% 46% 46%;background:linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.05));pointer-events:none}
+.tile::after{content:"";position:absolute;left:12%;right:12%;bottom:4%;height:10%;border-radius:50%;background:radial-gradient(rgba(255,255,255,.18),transparent 70%);pointer-events:none}
 .line{color:var(--text);opacity:.55}
+.ico3d{opacity:1}
 .cone{position:absolute;right:6%;top:-4%;width:46%;height:105%;background:linear-gradient(200deg,rgba(255,255,255,.2),rgba(255,255,255,.03) 55%,transparent 80%);clip-path:polygon(70% 0,100% 0,100% 100%,0 100%);opacity:.8}
 .ruler-x,.ruler-y{position:absolute;color:var(--muted);font:500 10px/1 Inter,sans-serif;opacity:.8}
 .ruler-x{left:0;right:0;top:84px;height:22px;border-bottom:1px solid var(--line);background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 10px) bottom/100% 6px no-repeat,repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 50px) bottom/100% 12px no-repeat}
@@ -263,12 +274,67 @@ html.smooth{scroll-behavior:auto!important}
   <!-- DARK mode: camera, studio light and video-editing tools -->
   <div class="deco deco-dark" aria-hidden="true">
     <div class="cone"></div>
-    <div class="ico line" style="--x:7%;--y:15%;--s:118px;--r:-8deg;--d:18"><svg viewBox="0 0 96 76" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="4" y="16" width="88" height="54" rx="8"/><path d="M30 16l6-10h24l6 10"/><circle cx="48" cy="43" r="17"/><circle cx="48" cy="43" r="8"/><circle cx="80" cy="28" r="3" fill="currentColor"/></svg></div>
-    <div class="ico line" style="--x:84%;--y:9%;--s:92px;--r:6deg;--d:22;--t:-2s"><svg viewBox="0 0 90 130" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M10 10h70l8 44H2z"/><path d="M24 10l-5 44M45 10v44M66 10l5 44"/><path d="M45 54v62M45 92l-24 34M45 92l24 34"/></svg></div>
-    <div class="ico tile" style="--x:14%;--y:70%;--s:70px;--r:-6deg;--d:30;--t:-1s;--bg:#00005b;--fg:#9999ff">Pr</div>
-    <div class="ico tile" style="--x:3%;--y:74%;--s:58px;--r:7deg;--d:24;--t:-3s;--bg:#00005b;--fg:#9999ff">Ae</div>
-    <div class="ico" style="--x:86%;--y:68%;--s:72px;--r:8deg;--d:28;--t:-4s"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#1b1b1b" stroke="#5a5a5a" stroke-width="2"/><g style="mix-blend-mode:screen"><circle cx="32" cy="22" r="11" fill="#ff4d4d"/><circle cx="23" cy="38" r="11" fill="#33d17a"/><circle cx="41" cy="38" r="11" fill="#3b82f6"/></g></svg></div>
-    <div class="ico line hide-sm" style="--x:76%;--y:80%;--s:56px;--r:-5deg;--d:16;--t:-5s"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="4" y="22" width="56" height="38" rx="4"/><path d="M4 22l10-14h12L16 22M24 22l10-14h12L36 22M44 22l10-14"/></svg></div>
+    <div class="ico ico3d" style="--x:5%;--y:12%;--s:150px;--r:-7deg;--d:20"><svg viewBox="0 0 220 170"><defs>
+<linearGradient id="cBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#58585f"/><stop offset=".07" stop-color="#2e2e33"/><stop offset=".6" stop-color="#17171a"/><stop offset="1" stop-color="#0a0a0c"/></linearGradient>
+<linearGradient id="cTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a6a72"/><stop offset="1" stop-color="#1c1c20"/></linearGradient>
+<linearGradient id="cMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b4b4bc"/><stop offset=".45" stop-color="#4a4a52"/><stop offset=".7" stop-color="#8e8e96"/><stop offset="1" stop-color="#2c2c32"/></linearGradient>
+<radialGradient id="cGlass" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="#7db2ff"/><stop offset=".3" stop-color="#21447c"/><stop offset=".65" stop-color="#0a1428"/><stop offset="1" stop-color="#010308"/></radialGradient>
+<pattern id="cDots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".9" fill="#2c2c32"/></pattern>
+</defs>
+<path d="M68 30Q70 8 92 8H128Q150 8 152 30Z" fill="url(#cTop)"/><rect x="100" y="2" width="20" height="8" rx="2" fill="#2a2a30"/>
+<rect x="6" y="26" width="208" height="128" rx="17" fill="url(#cBody)"/>
+<rect x="6.5" y="26.5" width="207" height="127" rx="16.5" fill="none" stroke="rgba(255,255,255,.22)"/>
+<rect x="12" y="40" width="38" height="104" rx="13" fill="#0e0e11"/><rect x="12" y="40" width="38" height="104" rx="13" fill="url(#cDots)"/>
+<rect x="170" y="40" width="38" height="104" rx="13" fill="#0e0e11"/><rect x="170" y="40" width="38" height="104" rx="13" fill="url(#cDots)"/>
+<rect x="20" y="12" width="42" height="18" rx="5" fill="url(#cMetal)"/><path d="M26 14v6M32 14v6M38 14v6M44 14v6M50 14v6M56 14v6" stroke="#1a1a1e" stroke-width="1.4"/>
+<ellipse cx="176" cy="22" rx="15" ry="6.5" fill="url(#cMetal)"/><ellipse cx="176" cy="20" rx="9" ry="3" fill="#d0d0d8" opacity=".55"/>
+<circle cx="194" cy="46" r="3.6" fill="#e0242b"/><circle cx="193" cy="45" r="1.2" fill="#ff9a9a"/>
+<circle cx="110" cy="92" r="55" fill="url(#cMetal)"/><circle cx="110" cy="92" r="50" fill="#0e0e11"/>
+<circle cx="110" cy="92" r="43" fill="none" stroke="#2a2a30" stroke-width="9"/><circle cx="110" cy="92" r="43" fill="none" stroke="#5a5a62" stroke-width="9" stroke-dasharray="2 3.2"/>
+<circle cx="110" cy="92" r="35" fill="none" stroke="#c8222a" stroke-width="2.6"/>
+<circle cx="110" cy="92" r="31" fill="url(#cGlass)"/><circle cx="110" cy="92" r="19" fill="#03050c" stroke="#1d2f52" stroke-width="1.5"/>
+<ellipse cx="98" cy="77" rx="12" ry="6" transform="rotate(-38 98 77)" fill="#fff" opacity=".6"/>
+<circle cx="124" cy="106" r="5.5" fill="#8c6bff" opacity=".55"/><circle cx="117" cy="111" r="3" fill="#2de0b0" opacity=".5"/>
+<path d="M12 33Q12 27 20 27H200Q208 27 208 33" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"/>
+</svg></div>
+    <div class="ico ico3d" style="--x:83%;--y:6%;--s:105px;--r:5deg;--d:24;--t:-2s"><svg viewBox="0 0 150 200"><defs>
+<radialGradient id="lFace" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e9eefc"/><stop offset="1" stop-color="#9aa6c0"/></radialGradient>
+<radialGradient id="lGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<linearGradient id="lMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a8a92"/><stop offset=".5" stop-color="#2a2a30"/><stop offset="1" stop-color="#7a7a82"/></linearGradient>
+</defs>
+<ellipse cx="72" cy="48" rx="86" ry="62" fill="url(#lGlow)" opacity=".5"/>
+<path d="M72 126V186M72 156L34 194M72 156L110 194" stroke="url(#lMetal)" stroke-width="6" stroke-linecap="round" fill="none"/>
+<rect x="63" y="114" width="18" height="16" rx="4" fill="url(#lMetal)"/>
+<path d="M24 14L126 14L138 92L12 92Z" fill="#101013"/>
+<path d="M16 8L134 8L146 84L4 84Z" fill="#17171b"/>
+<path d="M22 14L128 14L138 78L12 78Z" fill="url(#lFace)"/>
+<path d="M47 14L41 78M75 14V78M103 14L109 78M20 36H130M16 57H134" stroke="rgba(30,40,70,.12)" stroke-width="1"/>
+<path d="M22 14L128 14" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
+<ellipse cx="75" cy="44" rx="40" ry="20" fill="url(#lGlow)"/>
+</svg></div>
+    <div class="ico tile" style="--x:14%;--y:70%;--s:72px;--r:-6deg;--d:30;--t:-1s;--bg:#00005b;--fg:#9999ff">Pr</div>
+    <div class="ico tile" style="--x:3%;--y:74%;--s:60px;--r:7deg;--d:24;--t:-3s;--bg:#00005b;--fg:#9999ff">Ae</div>
+    <div class="ico ico3d" style="--x:86%;--y:66%;--s:78px;--r:8deg;--d:28;--t:-4s"><svg viewBox="0 0 64 64"><defs>
+<radialGradient id="dBase" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#4a4a50"/><stop offset=".6" stop-color="#18181b"/><stop offset="1" stop-color="#050506"/></radialGradient>
+<radialGradient id="dR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb0b0"/><stop offset=".5" stop-color="#ff4040"/><stop offset="1" stop-color="#a50e0e"/></radialGradient>
+<radialGradient id="dG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b6ffd0"/><stop offset=".5" stop-color="#2fd37a"/><stop offset="1" stop-color="#0b7a3c"/></radialGradient>
+<radialGradient id="dB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b8d4ff"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1239a8"/></radialGradient>
+</defs>
+<circle cx="32" cy="32" r="30.5" fill="url(#dBase)" stroke="#8a8a92" stroke-width="2"/>
+<circle cx="32" cy="32" r="27" fill="none" stroke="rgba(255,255,255,.15)"/>
+<g><circle cx="32" cy="21.5" r="10.5" fill="url(#dR)"/><circle cx="22.5" cy="38" r="10.5" fill="url(#dG)"/><circle cx="41.5" cy="38" r="10.5" fill="url(#dB)"/></g>
+<ellipse cx="22" cy="14" rx="14" ry="6" transform="rotate(-25 22 14)" fill="#fff" opacity=".22"/>
+</svg></div>
+    <div class="ico ico3d hide-sm" style="--x:84%;--y:80%;--s:84px;--r:-6deg;--d:16;--t:-5s"><svg viewBox="0 0 130 120"><defs>
+<linearGradient id="kBoard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a40"/><stop offset="1" stop-color="#0f0f12"/></linearGradient>
+<pattern id="kStripes" width="22" height="24" patternUnits="userSpaceOnUse" patternTransform="skewX(-32)"><rect width="11" height="24" fill="#f4f4f6"/><rect x="11" width="11" height="24" fill="#16161a"/></pattern>
+</defs>
+<rect x="8" y="46" width="112" height="68" rx="6" fill="url(#kBoard)" stroke="rgba(255,255,255,.25)"/>
+<rect x="8" y="46" width="112" height="16" fill="url(#kStripes)"/>
+<path d="M18 76H110M18 90H110M18 104H80" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+<g transform="rotate(-16 10 46)"><rect x="8" y="22" width="112" height="22" rx="4" fill="url(#kStripes)" stroke="rgba(255,255,255,.3)"/></g>
+<circle cx="12" cy="46" r="4" fill="#9a9aa2"/>
+</svg></div>
   </div>
   <!-- LIGHT mode: design software, rulers and measurements -->
   <div class="deco deco-light" aria-hidden="true">
