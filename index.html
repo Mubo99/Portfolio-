@@ -259,7 +259,7 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 /* ================= YOUR WORK =================
-   cat   : reel | poster | design | yearbook | photo | music
+   cat   : reel | poster | design | photo | music   (yearbooks go in "design")
    img   : image path (posters/photos use their own file; "" = auto thumbnail or grey placeholder)
    url   : link to a video (YouTube, YouTube Shorts, Instagram Reel, TikTok, Vimeo) — plays inside the page
    pdf   : path to a PDF (designs / yearbooks) — opens a page viewer you can swipe
@@ -280,7 +280,7 @@ const projects=[
   {title:"Beauty Clinic — 50% Off",cat:"reel",url:"https://www.facebook.com/reel/797004916418726",img:"reels/reel-08.jpg",tall:true},
   {title:"Promo — Student Holiday 50% Off",cat:"reel",url:"https://www.facebook.com/reel/851767340996435",img:"reels/reel-09.jpg",tall:true},
   {title:"Beauty Clinic — Reel 03",cat:"reel",url:"https://www.facebook.com/reel/1837477460474475",img:"reels/reel-10.jpg",tall:true},
-  {title:"Yearbook — Acting Class 4A",cat:"yearbook",pdf:"yearbook/yearbook-full.pdf"},
+  {title:"Yearbook — Acting Class 4A",cat:"design",pdf:"yearbook/yearbook-full.pdf"},
   {title:"Urin — Back to Kinder",cat:"poster",img:"posters/poster-01.webp"},
   {title:"Absolut — Protect Your Teeth",cat:"poster",img:"posters/poster-02.webp"},
   {title:"Batmon — Naadam Greeting",cat:"poster",img:"posters/poster-03.webp"},
@@ -308,7 +308,7 @@ const projects=[
   {title:"Graduation Portrait — 05",cat:"photo",img:"photos/photo-15.jpg",tall:true}
 ];
 const labels={reel:"Reel",poster:"Poster",design:"Design",yearbook:"Yearbook",photo:"Photography",music:"Music"};
-const cats=[{id:"reel",name:"Reels"},{id:"poster",name:"Posters"},{id:"design",name:"Designs"},{id:"yearbook",name:"Yearbooks"},{id:"photo",name:"Photography"},{id:"music",name:"Music"}];
+const cats=[{id:"reel",name:"Reels"},{id:"poster",name:"Posters"},{id:"design",name:"Designs"},{id:"photo",name:"Photography"},{id:"music",name:"Music"}];
 
 /* ---------- helpers ---------- */
 const $=id=>document.getElementById(id);
