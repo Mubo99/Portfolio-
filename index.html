@@ -49,6 +49,19 @@ nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84
 /* mouse-follow motion: photo and name drift in opposite directions */
 .hero h1{translate:calc(var(--mx,0)*-22px) calc(var(--my,0)*-10px);will-change:translate}
 .portrait,.sil{translate:calc(var(--mx,0)*30px) calc(var(--my,0)*16px);will-change:translate}
+/* orbiting glass app tiles */
+#orbit{position:absolute;inset:0;pointer-events:none}
+.gt{position:absolute;left:0;top:0;width:var(--gs,86px);height:var(--gs,86px);border-radius:24%;padding:calc(var(--gs,86px)*.075);will-change:transform;
+  background:linear-gradient(135deg,#fafafc 0%,#8d8d96 22%,#e6e6ec 45%,#5b5b63 68%,#cfcfd6 88%,#8a8a92 100%);
+  box-shadow:0 20px 26px -8px rgba(0,0,0,.65),0 3px 6px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,255,255,.9),inset 0 -2px 3px rgba(0,0,0,.45)}
+.gt::before{content:"";position:absolute;inset:7%;border-radius:17%;
+  background:linear-gradient(150deg,color-mix(in srgb,var(--b) 60%,#8a8aa0) 0%,var(--b) 45%,#030305 130%);
+  box-shadow:inset 0 3px 7px rgba(0,0,0,.7),inset 0 -2px 4px rgba(255,255,255,.12)}
+.gt::after{content:"";position:absolute;inset:7%;border-radius:17%;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,.38) 0%,rgba(255,255,255,.08) 34%,transparent 35%),radial-gradient(circle at 78% 86%,rgba(255,255,255,.14),transparent 50%)}
+.gl{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;color:var(--f);font:800 calc(var(--gs,86px)*.44)/1 Inter,system-ui,sans-serif;letter-spacing:-.04em;
+  text-shadow:1px 1px 0 color-mix(in srgb,var(--f) 70%,#000),2px 2px 0 color-mix(in srgb,var(--f) 55%,#000),3px 3px 0 color-mix(in srgb,var(--f) 40%,#000),4px 5px 5px rgba(0,0,0,.6)}
+.gl svg{width:62%;height:62%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.55))}
 /* RAW -> edited before/after slider */
 .badge{display:inline-block;margin:6px 0 2px;font-size:.62rem;font-weight:700;letter-spacing:.12em;border:1px solid rgba(255,255,255,.6);border-radius:99px;padding:3px 9px;color:#fff}
 .cmp{position:relative;display:grid;line-height:0;user-select:none;touch-action:pan-y;margin:0 auto;width:max-content;max-width:100%}
@@ -272,6 +285,11 @@ html.smooth{scroll-behavior:auto!important}
 <main id="top">
 <section class="hero" id="hero">
   <!-- DARK mode: camera, studio light and video-editing tools -->
+  <div id="orbit" aria-hidden="true"><div class="gt" style="--b:#001e36;--f:#31a8ff"><span class="gl">Ps</span></div><div class="gt" style="--b:#330000;--f:#ff9a00"><span class="gl">Ai</span></div><div class="gt" style="--b:#001e36;--f:#31a8ff"><span class="gl">Lr</span></div><div class="gt" style="--b:#00005b;--f:#c9a8ff"><span class="gl">Pr</span></div><div class="gt" style="--b:#00005b;--f:#9999ff"><span class="gl">Ae</span></div><div class="gt" style="--b:#16161a;--f:#ffffff"><span class="gl"><svg viewBox="0 0 64 64" width="100%" height="100%"><defs>
+<radialGradient id="oR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb0b0"/><stop offset=".5" stop-color="#ff4040"/><stop offset="1" stop-color="#a50e0e"/></radialGradient>
+<radialGradient id="oG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b6ffd0"/><stop offset=".5" stop-color="#2fd37a"/><stop offset="1" stop-color="#0b7a3c"/></radialGradient>
+<radialGradient id="oB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b8d4ff"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1239a8"/></radialGradient></defs>
+<circle cx="32" cy="21" r="12" fill="url(#oR)"/><circle cx="22" cy="39" r="12" fill="url(#oG)"/><circle cx="42" cy="39" r="12" fill="url(#oB)"/></svg></span></div></div>
   <div class="deco deco-dark" aria-hidden="true">
     <div class="cone"></div>
     <div class="ico ico3d" style="--x:5%;--y:12%;--s:150px;--r:-7deg;--d:20"><svg viewBox="0 0 220 170"><defs>
@@ -312,19 +330,6 @@ html.smooth{scroll-behavior:auto!important}
 <path d="M22 14L128 14" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
 <ellipse cx="75" cy="44" rx="40" ry="20" fill="url(#lGlow)"/>
 </svg></div>
-    <div class="ico tile" style="--x:14%;--y:70%;--s:72px;--r:-6deg;--d:30;--t:-1s;--bg:#00005b;--fg:#9999ff">Pr</div>
-    <div class="ico tile" style="--x:3%;--y:74%;--s:60px;--r:7deg;--d:24;--t:-3s;--bg:#00005b;--fg:#9999ff">Ae</div>
-    <div class="ico ico3d" style="--x:86%;--y:66%;--s:78px;--r:8deg;--d:28;--t:-4s"><svg viewBox="0 0 64 64"><defs>
-<radialGradient id="dBase" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#4a4a50"/><stop offset=".6" stop-color="#18181b"/><stop offset="1" stop-color="#050506"/></radialGradient>
-<radialGradient id="dR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb0b0"/><stop offset=".5" stop-color="#ff4040"/><stop offset="1" stop-color="#a50e0e"/></radialGradient>
-<radialGradient id="dG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b6ffd0"/><stop offset=".5" stop-color="#2fd37a"/><stop offset="1" stop-color="#0b7a3c"/></radialGradient>
-<radialGradient id="dB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b8d4ff"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1239a8"/></radialGradient>
-</defs>
-<circle cx="32" cy="32" r="30.5" fill="url(#dBase)" stroke="#8a8a92" stroke-width="2"/>
-<circle cx="32" cy="32" r="27" fill="none" stroke="rgba(255,255,255,.15)"/>
-<g><circle cx="32" cy="21.5" r="10.5" fill="url(#dR)"/><circle cx="22.5" cy="38" r="10.5" fill="url(#dG)"/><circle cx="41.5" cy="38" r="10.5" fill="url(#dB)"/></g>
-<ellipse cx="22" cy="14" rx="14" ry="6" transform="rotate(-25 22 14)" fill="#fff" opacity=".22"/>
-</svg></div>
     <div class="ico ico3d hide-sm" style="--x:84%;--y:80%;--s:84px;--r:-6deg;--d:16;--t:-5s"><svg viewBox="0 0 130 120"><defs>
 <linearGradient id="kBoard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a40"/><stop offset="1" stop-color="#0f0f12"/></linearGradient>
 <pattern id="kStripes" width="22" height="24" patternUnits="userSpaceOnUse" patternTransform="skewX(-32)"><rect width="11" height="24" fill="#f4f4f6"/><rect x="11" width="11" height="24" fill="#16161a"/></pattern>
@@ -340,9 +345,6 @@ html.smooth{scroll-behavior:auto!important}
   <div class="deco deco-light" aria-hidden="true">
     <div class="ruler-x" id="rulerX"></div><div class="ruler-y"></div>
     <div class="guide" style="left:22%;top:106px;bottom:0;width:1px"></div><div class="guide" style="top:62%;left:22px;right:0;height:1px"></div>
-    <div class="ico tile" style="--x:7%;--y:16%;--s:72px;--r:-7deg;--d:28;--bg:#001e36;--fg:#31a8ff">Ps</div>
-    <div class="ico tile" style="--x:85%;--y:10%;--s:66px;--r:8deg;--d:24;--t:-2s;--bg:#330000;--fg:#ff9a00">Ai</div>
-    <div class="ico tile" style="--x:14%;--y:70%;--s:62px;--r:6deg;--d:30;--t:-3s;--bg:#001e36;--fg:#31a8ff">Lr</div>
     <div class="ico line hide-sm" style="--x:73%;--y:58%;--s:230px;--r:-4deg;--d:14;--t:-1s"><svg viewBox="0 0 200 130" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="196" height="126" rx="9" fill="var(--surface)"/><path d="M2 22h196"/><circle cx="14" cy="12" r="3" fill="currentColor"/><circle cx="25" cy="12" r="3" fill="currentColor"/><circle cx="36" cy="12" r="3" fill="currentColor"/><path d="M12 34h14M12 46h14M12 58h14M12 70h14"/><path d="M40 34v86M40 34h110v86H40z"/><path d="M52 100C70 40 100 110 138 52" stroke="#18a0fb" stroke-width="2.5"/><rect x="49" y="97" width="6" height="6" fill="#fff" stroke="#18a0fb"/><rect x="135" y="49" width="6" height="6" fill="#fff" stroke="#18a0fb"/><path d="M160 34h30M160 46h30M160 58h22M160 70h30M160 82h26"/></svg></div>
     <div class="ico line" style="--x:80%;--y:84%;--s:150px;--r:0deg;--d:12;--t:-4s"><svg viewBox="0 0 150 30" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8v14M148 8v14M2 15h146"/><path d="M2 15l8-4v8zM148 15l-8-4v8z" fill="currentColor"/><text x="75" y="11" font-size="11" text-anchor="middle" fill="currentColor" stroke="none" font-family="Inter,sans-serif" paint-order="stroke">250 mm</text></svg></div>
   </div>
@@ -730,6 +732,33 @@ addEventListener('keydown',e=>{
 
 /* ruler numbers for the light-mode hero */
 (function(){const r=$('rulerX');if(!r)return;for(let i=0;i*100<screen.width+400;i++){const s=document.createElement('span');s.style.left=(i*100+22)+'px';s.textContent=i*10;r.appendChild(s)}})();
+
+/* ---------- orbit: glass tiles circle around the portrait ---------- */
+(function(){
+  const hero=$('hero'),box=$('orbit');if(!hero||!box)return;
+  const items=[...box.children],n=items.length;if(!n)return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t=0,last=performance.now(),vis=true;
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(hero);
+  function place(){
+    const W=hero.clientWidth,H=hero.clientHeight,small=W<700;
+    const mx=parseFloat(hero.style.getPropertyValue('--mx'))||0,my=parseFloat(hero.style.getPropertyValue('--my'))||0;
+    const size=small?58:Math.min(124,Math.max(84,W*.082));
+    const R=Math.min(W*(small?.38:.35),620),ry=R*.17;
+    const cx=W/2+mx*16,cy=H*(small?.62:.64)+my*8;
+    items.forEach((el,i)=>{
+      const a=t+i*2*Math.PI/n,s=Math.sin(a),c=Math.cos(a),k=(c+1)/2;
+      const sc=.66+.34*k,x=cx+R*s,y=cy+ry*c;
+      el.style.setProperty('--gs',size+'px');
+      el.style.transform='translate('+(x-size/2).toFixed(1)+'px,'+(y-size/2).toFixed(1)+'px) perspective(700px) rotateY('+(-s*38).toFixed(1)+'deg) rotateX('+(my*-10).toFixed(1)+'deg) scale('+sc.toFixed(3)+')';
+      el.style.zIndex=c>0?5:1;
+      el.style.opacity=(.5+.5*k).toFixed(2);
+    });
+  }
+  function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(vis&&!reduce)t+=dt*.3;if(vis)place();requestAnimationFrame(frame)}
+  place();requestAnimationFrame(frame);
+  addEventListener('resize',place);
+})();
 
 /* ---------- hero: photo follows the cursor ---------- */
 (function(){
