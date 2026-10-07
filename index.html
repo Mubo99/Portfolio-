@@ -198,6 +198,7 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
 /* custom cursor: a dot plus a soft ring that trails behind it */
 #cur-dot,#cur-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;opacity:0;transition:opacity .25s}
 #cur-dot{width:9px;height:9px;border-radius:50%;background:var(--cur);box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+#cur-ring b{display:block;will-change:transform}
 #cur-ring i{display:block;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--cur);background:color-mix(in srgb,var(--cur) 14%,transparent);
   box-shadow:0 0 0 1px rgba(0,0,0,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s}
 #cur-ring.big i{transform:scale(1.7);background:color-mix(in srgb,var(--cur) 20%,transparent)}
@@ -210,7 +211,7 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
 </style>
 </head>
 <body>
-<div id="cur-dot"></div><div id="cur-ring"><i></i></div>
+<div id="cur-dot"></div><div id="cur-ring"><b><i></i></b></div>
 
 <header>
   <nav>
@@ -689,11 +690,15 @@ $('lang').onclick=()=>setLang(LANG==='en'?'mn':'en');
 /* ---------- custom cursor ---------- */
 (function(){
   if(!matchMedia('(pointer: fine)').matches)return;
-  const dot=$('cur-dot'),ring=$('cur-ring');
+  const dot=$('cur-dot'),ring=$('cur-ring'),sk=ring.firstElementChild;
   document.documentElement.classList.add('cc');
   let mx=-100,my=-100,rx=-100,ry=-100,raf=0,seen=false;
   const place=()=>{
-    rx+=(mx-rx)*.2;ry+=(my-ry)*.2;
+    const dx=mx-rx,dy=my-ry,d=Math.hypot(dx,dy);
+    /* stretch the ring along the direction of travel: the faster you move, the longer it gets */
+    const s=Math.min(d/110,.75);
+    sk.style.transform='rotate('+(Math.atan2(dy,dx)*180/Math.PI).toFixed(1)+'deg) scale('+(1+s).toFixed(3)+','+(1-s*.38).toFixed(3)+')';
+    rx+=dx*.2;ry+=dy*.2;
     ring.style.transform='translate3d('+rx.toFixed(1)+'px,'+ry.toFixed(1)+'px,0) translate(-50%,-50%)';
     raf=(Math.abs(mx-rx)>.3||Math.abs(my-ry)>.3)?requestAnimationFrame(place):0;
   };
@@ -701,7 +706,7 @@ $('lang').onclick=()=>setLang(LANG==='en'?'mn':'en');
     mx=e.clientX;my=e.clientY;
     dot.style.transform='translate3d('+mx+'px,'+my+'px,0) translate(-50%,-50%)';
     if(!seen){seen=true;rx=mx;ry=my;dot.classList.add('on');ring.classList.add('on')}
-    ring.classList.toggle('big',!!e.target.closest('a,button,.card,[role=button],select,summary,label'));
+    ring.classList.toggle('big',!!(e.target.closest&&e.target.closest('a,button,.card,[role=button],select,summary,label')));
     if(!raf)raf=requestAnimationFrame(place);
   },{passive:true});
   addEventListener('mousedown',()=>ring.classList.add('down'));
