@@ -62,6 +62,8 @@ h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size
 .grid .card{margin-bottom:16px;break-inside:avoid;display:block}
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
 .card.cat .meta h3{font-size:2.1rem}
+.empty{color:var(--muted);padding:60px 0;text-align:center;font-size:1.05rem}
+.card.cat.soon .art{opacity:.55}
 .card.cat .meta{padding:22px}
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface);cursor:pointer}
 .card.tall{aspect-ratio:3/4}.card.sq{aspect-ratio:1/1}.card.hide{display:none!important}
@@ -177,6 +179,7 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
     <div class="filters" id="filters"></div>
     <div class="cats" id="cats"></div>
     <div class="grid" id="grid" hidden></div>
+    <p class="empty" id="empty" hidden>Coming soon — new work is on the way.</p>
   </div>
 </section>
 
@@ -322,7 +325,7 @@ const pdfEl=$('pdf'),stage=$('stage'),pagesEl=$('pages'),pmsg=$('pmsg');
 
 /* ---------- categories + grid ---------- */
 const grid=$('grid'),catsEl=$('cats'),filtersEl=$('filters');
-const used=cats.filter(c=>projects.some(p=>p.cat===c.id));
+const used=cats; /* every category always shows; empty ones say "Coming soon" */
 const coverEls={};
 function setCover(cat,css){const a=coverEls[cat];if(a&&!a.dataset.set){a.style.background=css;a.dataset.set='1'}}
 
@@ -330,8 +333,8 @@ filtersEl.innerHTML='<button class="on" data-f="all">All</button>'+used.map(c=>'
 used.forEach((c,i)=>{
   const n=projects.filter(p=>p.cat===c.id).length;
   const el=document.createElement('div');
-  el.className='card cat reveal';el.tabIndex=0;
-  el.innerHTML='<div class="art" style="background:'+grad(i)+'"></div><div class="meta"><small>'+n+(n>1?' items':' item')+'</small><h3>'+c.name+'</h3></div>';
+  el.className='card cat reveal'+(n?'':' soon');el.tabIndex=0;
+  el.innerHTML='<div class="art" style="background:'+grad(i)+'"></div><div class="meta"><small>'+(n?n+(n>1?' items':' item'):'Coming soon')+'</small><h3>'+c.name+'</h3></div>';
   el.onclick=()=>show(c.id);
   el.onkeydown=e=>{if(e.key==='Enter')show(c.id)};
   coverEls[c.id]=el.querySelector('.art');
@@ -361,7 +364,7 @@ projects.forEach((p,i)=>{
 function show(id){
   filtersEl.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.f===id));
   const home=id==='all';
-  catsEl.hidden=!home;grid.hidden=home;
+  catsEl.hidden=!home;grid.hidden=home||!projects.some(p=>p.cat===id);$('empty').hidden=home||projects.some(p=>p.cat===id);
   projects.forEach(p=>{const on=p.cat===id;p._el.classList.toggle('hide',!on);if(on)p._el.classList.add('in')});
   catsEl.querySelectorAll('.card').forEach(c=>c.classList.add('in'));
   if(!home)$('work').scrollIntoView({behavior:'smooth'});
