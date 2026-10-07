@@ -82,7 +82,7 @@ header{color:#fff;mix-blend-mode:difference}
 .soc{position:absolute;z-index:4;left:4vw;bottom:14px;display:flex;gap:10px}
 .soc a{width:22px;height:22px;border-radius:50%;background:var(--muted);color:var(--bg);display:grid;place-items:center;font-size:.62rem;font-weight:700}
 .handle{position:absolute;z-index:4;right:4vw;bottom:14px;font-size:.72rem;color:var(--muted)}
-@media(max-width:700px){.corner{display:none}.hero h1{font-size:24vw;line-height:.9;white-space:normal;transform:translateY(-70%)}}
+@media(max-width:700px){.corner{display:none}.hero h1{font-size:19vw;line-height:.9;white-space:normal;transform:translateY(-70%)}}
 
 /* SECTIONS */
 section.s{padding:110px 0}
@@ -179,6 +179,13 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+/* phones: logo + language/theme on the first row, menu on the second so nothing is cut off */
+@media(max-width:700px){
+  nav{grid-template-columns:1fr auto;height:auto;padding:10px 16px 8px;row-gap:6px}
+  .links{grid-column:1/-1;grid-row:2;justify-content:space-between;gap:0;font-size:.8rem}
+  .rt{grid-column:2;grid-row:1;gap:12px}
+  .hero{padding-top:0}
+}
 </style>
 </head>
 <body>
@@ -593,6 +600,17 @@ addEventListener('keydown',e=>{
     tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5;go();
   });
   hero.addEventListener('pointerleave',()=>{tx=0;ty=0;go()});
+  /* touch screens: follow the finger (even while scrolling), otherwise sway gently on their own */
+  if(matchMedia('(pointer: coarse)').matches){
+    let touching=false;
+    const tm=e=>{const t=e.touches[0];if(!t)return;const r=hero.getBoundingClientRect();
+      tx=Math.max(-.5,Math.min(.5,(t.clientX-r.left)/r.width-.5));ty=Math.max(-.5,Math.min(.5,(t.clientY-r.top)/r.height-.5));touching=true;go()};
+    hero.addEventListener('touchstart',tm,{passive:true});hero.addEventListener('touchmove',tm,{passive:true});
+    hero.addEventListener('touchend',()=>{touching=false},{passive:true});
+    hero.addEventListener('touchcancel',()=>{touching=false},{passive:true});
+    const t0=performance.now();
+    (function sway(now){if(!touching){const s=(now-t0)/1000;tx=Math.sin(s*.8)*.42;ty=Math.cos(s*.6)*.22;go()}requestAnimationFrame(sway)})(t0);
+  }
 })();
 
 /* ---------- portrait fallback ---------- */
