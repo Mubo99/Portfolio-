@@ -59,7 +59,7 @@ h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size
 .filters button.on,.filters button:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface);cursor:pointer}
-.card.tall{aspect-ratio:3/4}.card.hide{display:none}
+.card.tall{aspect-ratio:3/4}.card.sq{aspect-ratio:1/1}.card.hide{display:none}
 .card .art{position:absolute;inset:0;filter:grayscale(1);transition:filter .5s,transform .7s}
 .card:hover .art{filter:grayscale(0);transform:scale(1.06)}
 .card .meta{position:absolute;inset:auto 0 0 0;padding:18px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff}
@@ -263,8 +263,16 @@ const projects=[
   {title:"Brand Identity — Studio Nova",cat:"design",pdf:"designs/brand-identity.pdf"},
   {title:"Reel 01",cat:"reel",url:"",tall:true},
   {title:"Reel 02",cat:"reel",url:"",tall:true},
-  {title:"Poster — Title",cat:"poster",img:"posters/poster-1.jpg",tall:true},
-  {title:"Poster — Title",cat:"poster",img:"posters/poster-2.jpg",tall:true},
+  {title:"Urin — Back to Kinder",cat:"poster",img:"posters/poster-01.webp"},
+  {title:"Absolut — Protect Your Teeth",cat:"poster",img:"posters/poster-02.webp"},
+  {title:"Batmon — Naadam Greeting",cat:"poster",img:"posters/poster-03.webp"},
+  {title:"Urin — Naadam Greeting",cat:"poster",img:"posters/poster-04.webp"},
+  {title:"Obukhiv — 40 Years of Quality",cat:"poster",img:"posters/poster-05.webp"},
+  {title:"Urin — Support Local Naadam",cat:"poster",img:"posters/poster-06.webp"},
+  {title:"Millennial vs Gen Z Designer",cat:"poster",img:"posters/poster-07.webp"},
+  {title:"Urin — Picnic",cat:"poster",img:"posters/poster-08.webp"},
+  {title:"Urin Soft",cat:"poster",img:"posters/poster-09.webp"},
+  {title:"Urin — Rain or Shine",cat:"poster",img:"posters/poster-10.webp"},
   {title:"Guitar Cover",cat:"music",url:"",wide:true},
   {title:"Singing",cat:"music",url:"",wide:true},
   {title:"Portrait Series",cat:"photo",img:"",tall:true}
@@ -302,7 +310,7 @@ projects.forEach((p,i)=>{
   p._vertical=vertical;
   const thumb=p.img||(p._v&&p._v.thumb)||'';
   const el=document.createElement('div');
-  el.className='card reveal'+((p.tall||vertical)?' tall':'')+((p.url)?' play':'');
+  el.className='card reveal'+((p.tall||vertical)?' tall':'')+(p.cat==='poster'?' sq':'')+((p.url)?' play':'');
   el.dataset.cat=p.cat;
   el.tabIndex=0;
   el.innerHTML=`<div class="art" style="${thumb?`background:url('${esc(thumb)}') center/cover`:`background:${grad(i)}`}"></div><div class="meta"><small>${labels[p.cat]}${p.pdf?' · PDF':''}</small><h3>${esc(p.title)}</h3></div>`;
