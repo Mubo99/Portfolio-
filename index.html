@@ -23,6 +23,11 @@ nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84
 .logo{font-family:var(--display);font-size:1.4rem;letter-spacing:.02em;text-transform:uppercase}
 .links{display:flex;gap:6vw;font-size:.9rem;font-weight:500}
 .links a{opacity:.85}.links a:hover{opacity:1}
+.rt{justify-self:end;display:flex;align-items:center;gap:16px}
+.lang{background:none;border:0;color:inherit;font:500 .85rem/1 Inter,system-ui,sans-serif;cursor:pointer;display:flex;gap:6px;align-items:center;padding:6px 4px}
+.lang i{font-style:normal;opacity:.4}
+.lang b{font-weight:500;opacity:.45;transition:opacity .2s}
+.lang b.on{opacity:1;text-decoration:underline;text-underline-offset:5px}
 .switch{justify-self:end;width:46px;height:26px;border-radius:99px;background:var(--text);border:0;position:relative;cursor:pointer}
 .switch::after{content:"";position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:var(--bg);transition:.25s}
 :root[data-theme="light"] .switch::after{right:24px}
@@ -182,7 +187,7 @@ footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;borde
   <nav>
     <a href="#top" class="logo">Мөнхболд</a>
     <div class="links"><a href="#top">Home</a><a href="#work">Work</a><a href="#about">About</a><a href="#experience">Resume</a><a href="#contact">Contact</a></div>
-    <button class="switch" id="theme" aria-label="Toggle light and dark theme"></button>
+    <div class="rt"><button class="lang" id="lang" aria-label="Language / Хэл"><b data-l="en">EN</b><i>/</i><b data-l="mn">МН</b></button><button class="switch" id="theme" aria-label="Toggle light and dark theme"></button></div>
   </nav>
 </header>
 
@@ -595,6 +600,51 @@ const pi=document.querySelector('.portrait');
 const noPhoto=()=>$('hero').classList.add('nophoto');
 pi.addEventListener('error',noPhoto);
 if(pi.complete&&!pi.naturalWidth)noPhoto();
+
+/* ---------- language: English / Mongolian ---------- */
+const MN={"Home":"Нүүр","Work":"Ажлууд","About":"Миний тухай","Resume":"Намтар","Contact":"Холбоо барих","Designer · Editor":"Дизайнер · Эдитор","Photographer · Videographer":"Фото зураглаач · Видео зураглаач","Available for projects":"Шинэ төсөлд нээлттэй","Based in Ulaanbaatar":"Улаанбаатар хотод","Selected work":"Шилдэг ажлууд","Design. Film.":"Дизайн. Кино.","Photo. Music.":"Фото. Хөгжим.","Reels, posters, packaging, yearbooks, photography and music — a growing collection of work for brands, schools and artists. Pick a folder to explore.":"Реел, постер, сав баглаа боодол, жилийн ном, фото зураг, хөгжим — брэнд, сургууль, уран бүтээлчдэд зориулсан өсөн нэмэгдсээр буй цуглуулга. Хавтас сонгоод үзээрэй.","All":"Бүгд","Reels":"Реел","Posters":"Постер","Designs":"Дизайн","Photography":"Фото зураг","Music":"Хөгжим","Reel":"Реел","Poster":"Постер","Design":"Дизайн","Coming soon":"Удахгүй","Coming soon — new work is on the way.":"Удахгүй — шинэ ажлууд ирж байна.","Shot, directed and edited by me — from concept to final cut.":"Бүгдийг нь би өөрөө зураглаж, найруулж, монтажласан — санаанаас эцсийн хувилбар хүртэл.","Hi, I'm":"Сайн байна уу, би","I'm Battulga Munkhbold, a 27-year-old photographer, videographer, editor and designer from Ulaanbaatar, Mongolia. I learn fast, work independently and stay calm under pressure.":"Намайг Баттулга Мөнхболд гэдэг. Би 27 настай, Монгол Улсын Улаанбаатар хотод амьдардаг фото болон видео зураглаач, эдитор, дизайнер. Хурдан суралцдаг, бие даан ажилладаг, ачаалал даадаг.","I've run a company, managed shows in South Korea and shot for beauty clinics, and I also study and play music. I also create with AI: video, images and code with tools like Claude Code and Codex.":"Би компани удирдаж, Өмнөд Солонгост шоу менежерээр ажиллаж, гоо сайхны клиникүүдэд зураглал хийж байсан. Мөн хөгжим сурч, тоглодог. Түүнчлэн хиймэл оюун ухаанаар видео, зураг, код бүтээдэг (Claude Code, Codex гэх мэт).","Companies":"Компани","Languages":"Хэл","Crafts":"Чиглэл","Experience":"Туршлага","NOW":"ОДОО","Editor · Designer · Videographer":"Эдитор · Дизайнер · Зураглаач","· 6 months":"· 6 сар","Video, posters, package design, social media content and a chatbot.":"Видео, постер, сав баглаа боодлын дизайн, сошиал медиа контент болон чатбот.","9 MO":"9 САР","Videographer & Editor":"Зураглаач & Эдитор","Photo and video shoots plus editing for Golden Luxor Beauty Clinic, Venera VIP Clinic and Goo Khatan Medical.":"Golden Luxor Beauty Clinic, Venera VIP Clinic, Гоо Хатан Медикал-д зориулсан фото, видео зураглал болон монтаж.","KOR":"СОЛ","Show Manager":"Шоу менежер","South Korea":"Өмнөд Солонгос","Events, stage technology, posters and photo shooting.":"Эвент, тайзны техник, постер, фото зураг авалт.","2–3 Y":"2–3 ЖИЛ","Shoemaker":"Гутлын оёдолчин","Sewing and production-line work.":"Оёдол болон дамжлагын ажил.","Director":"Захирал","Led the team, strategy, marketing and finance.":"Баг, стратеги, маркетинг, санхүүг удирдсан.","Education":"Боловсрол","· Music":"· Хөгжим","2021.09 – 2023.12 · Graduated":"2021.09 – 2023.12 · Төгссөн","National University of Mongolia":"Монгол Улсын Их Сургууль","· Business":"· Бизнес","Tools":"Хэрэгсэл","AI":"Хиймэл оюун","AI video creation":"AI видео бүтээл","AI image creation":"AI зураг бүтээл","Mongolian · native":"Монгол · төрөлх","English · upper-intermediate":"Англи · дундаас дээш","Korean · level 4":"Солонгос · 4-р түвшин","Driver's license: category B":"Жолооны үнэмлэх: B ангилал","What I do":"Миний хийдэг зүйл","Services":"Үйлчилгээ","Graphic Design":"График дизайн","Branding, logos, posters, social media kits and print layouts.":"Брэндинг, лого, постер, сошиал медиа багц, хэвлэлийн макет.","Video Editing":"Видео монтаж","Cuts, color grading, motion graphics and sound for ads, YouTube and film.":"Зар сурталчилгаа, YouTube, киноны монтаж, өнгө засалт, моушн график, дуу.","Portrait, event, product and lifestyle shoots with full retouching.":"Портрет, эвент, бүтээгдэхүүн, лайфстайл зураглал, бүрэн ретуш.","Videography":"Видео зураглал","Commercials, music videos, weddings and documentary shoots.":"Зар, клип, хуримын болон баримтат кино зураглал.","Let's work together":"Хамтдаа ажиллацгаая","Мөнхболд · Ulaanbaatar":"Мөнхболд · Улаанбаатар","Open":"Нээх","Download":"Татах","Loading…":"Ачаалж байна…","Open video ↗":"Бичлэг нээх ↗","Urin — Paper vs Hand Dryer":"Урин — Гарын цаас vs гар хатаагч","Urin — Does Toilet Paper Dissolve?":"Урин — Нойлын цаас усанд уусдаг уу?","Urin — 100% Natural":"Урин — 100% байгалийн","Beauty Clinic — Reel 01":"Гоо сайхны клиник — Реел 01","Beauty Clinic — Reel 02":"Гоо сайхны клиник — Реел 02","Beauty Clinic — Reel 03":"Гоо сайхны клиник — Реел 03","Beauty Clinic — 50% Off":"Гоо сайхны клиник — 50% хөнгөлөлт","Reel 05":"Реел 05","Promo — Student Holiday":"Урамшуулал — Сурагчдын амралт","Promo — Student Holiday 50% Off":"Урамшуулал — Сурагчдын амралт 50% хөнгөлөлт","Yearbook — Acting Class 4A":"Жилийн ном — Жүжигчин 4А анги","Urin — Package Design: Fairy":"Урин — Сав баглаа: Дагина","Urin — Package Design: Collection":"Урин — Сав баглаа: Цуглуулга","Urin — Package Design: Space":"Урин — Сав баглаа: Сансар","Urin Soft — Print Layout":"Урин Софт — Хэвлэлийн макет","Urin Tissue — Print Layout":"Урин салфетка — Хэвлэлийн макет","Urin Astronaut — Print Layout":"Урин сансрын нисэгч — Хэвлэлийн макет","Khos Goyo — Shopping Bag Print":"Хос гоёо — Уутны хэвлэл","Urin — Back to Kinder":"Урин — Цэцэрлэгтээ буцъя","Absolut — Protect Your Teeth":"Absolut — Шүдээ хамгаалъя","Batmon — Naadam Greeting":"Batmon — Наадмын мэндчилгээ","Urin — Naadam Greeting":"Урин — Наадмын мэндчилгээ","Obukhiv — 40 Years of Quality":"Obukhiv — 40 жилийн чанар","Urin — Support Local Naadam":"Урин — Үндэсний үйлдвэрээ дэмжье","Millennial vs Gen Z Designer":"Миллениал vs Gen Z дизайнер","Urin — Picnic":"Урин — Пикник","Urin Soft":"Урин Софт","Urin — Rain or Shine":"Урин — Бороо орсон ч","Orange Studio — Group":"Улбар шар студи — Групп","Black & White — Class":"Хар цагаан — Анги","In Black — Trio":"Хар хувцастай — Гурвал","Studio — Group Portrait":"Студи — Группын зураг","Theatre — Red Seats":"Театр — Улаан суудал","Stage — Purple Light":"Тайз — Нил ягаан гэрэл","Black & White — Suits":"Хар цагаан — Костюм","Black & White — Stage":"Хар цагаан — Тайз","Orange Studio — Friends":"Улбар шар студи — Найзууд","Orange Studio — Duo":"Улбар шар студи — Хос","Music — Instagram Reel 01":"Хөгжим — Instagram реел 01","Music — Instagram Reel 02":"Хөгжим — Instagram реел 02"};
+const orig=new WeakMap();
+let LANG='en';
+function trText(k){
+  if(MN[k]!==undefined)return MN[k];
+  let m=k.match(/^(\d+) items?$/);if(m)return m[1]+' бүтээл';
+  m=k.match(/^Graduation Portrait — (\d+)$/);if(m)return 'Төгсөлтийн портрет — '+m[1];
+  m=k.match(/^(Reel|Poster|Design|Photography|Music)( · PDF)?$/);if(m)return MN[m[1]]+(m[2]||'');
+  return null;
+}
+function setNode(n){
+  if(!orig.has(n))orig.set(n,n.nodeValue);
+  const en=orig.get(n);
+  if(LANG==='mn'){
+    const k=en.trim();const t=k?trText(k):null;
+    if(t!==null){n.nodeValue=en.match(/^\s*/)[0]+t+en.match(/\s*$/)[0];return}
+  }
+  n.nodeValue=en;
+}
+function walk(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&n.parentElement.closest('script,style,noscript')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let n;while(n=w.nextNode())setNode(n);
+}
+function setLang(l){
+  LANG=l;
+  try{localStorage.setItem('lang',l)}catch(e){}
+  document.documentElement.lang=l==='mn'?'mn':'en';
+  document.title=l==='mn'?'Мөнхболд — Дизайнер, Эдитор, Зураглаач':'Мөнхболд — Designer, Editor, Photographer & Videographer';
+  document.querySelectorAll('#lang b').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  walk(document.body);
+}
+/* translate text that the page adds later (counters, notes, new cards) */
+new MutationObserver(ms=>{
+  for(const m of ms)for(const n of m.addedNodes){
+    if(n.nodeType===3)setNode(n);else if(n.nodeType===1)walk(n);
+  }
+}).observe(document.body,{childList:true,subtree:true});
+$('lang').onclick=()=>setLang(LANG==='en'?'mn':'en');
+(function(){
+  let l='en';
+  try{l=localStorage.getItem('lang')||((navigator.language||'').toLowerCase().startsWith('mn')?'mn':'en')}catch(e){}
+  setLang(l);
+})();
 
 /* ---------- theme ---------- */
 const root=document.documentElement;
